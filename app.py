@@ -104,20 +104,7 @@ def download_report():
     from datetime import datetime
     from flask import send_file
     from reportlab.pdfgen import canvas
-@app.route("/logs")
-def logs():
 
-    import csv
-
-    log_data = []
-
-    with open("logs/system_log.csv", "r") as file:
-        reader = csv.reader(file)
-
-        for row in reader:
-            log_data.append(row)
-
-    return render_template("logs.html", logs=log_data)
     data = get_system_info()
 
     filename = "System_Report.pdf"
@@ -191,6 +178,20 @@ def logs():
     c.save()
 
     return send_file(filename, as_attachment=True)
+@app.route("/logs")
+def logs():
+
+    import csv
+
+    log_data = []
+
+    with open("logs/system_log.csv", "r") as file:
+        reader = csv.reader(file)
+
+        for row in reader:
+            log_data.append(row)
+
+    return render_template("logs.html", logs=log_data)
 
 
 if __name__ == "__main__":
