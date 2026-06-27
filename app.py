@@ -33,7 +33,7 @@ def dashboard():
     if data["cpu"] > 1:
         #send_alert(f"Warning! CPU usage is {data['cpu']}%")
 
-    processes = manage_processes()
+       processes = manage_processes()
     # Analytics Counters
     backup_count = 145
     prediction_count = 382
