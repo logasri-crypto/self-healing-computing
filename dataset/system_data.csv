@@ -1,0 +1,11 @@
+CPU,RAM,DISK,STATUS
+20,30,50,Healthy
+25,40,55,Healthy
+35,45,60,Healthy
+50,60,65,Healthy
+70,75,70,Warning
+80,85,75,Warning
+90,95,80,Failure
+95,98,85,Failure
+85,90,80,Failure
+30,50,60,Healthy

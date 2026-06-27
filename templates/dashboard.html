@@ -1,0 +1,240 @@
+<<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Self-Healing Computing Dashboard</title>
+    <meta http-equiv="refresh" content="5">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header class="topbar">
+
+    <h2>🖥 Self-Healing Computing System</h2>
+
+    <div class="top-info">
+
+    <span>👤 Admin</span>
+
+    <span>🔔 3 Alerts</span>
+
+    <span id="clock">Loading...</span>
+
+    <a href="/download_report">📄 Download Report</a>
+
+    <a href="/logs">📄 View Logs</a>
+
+    <a href="/">🚪 Logout</a>
+
+</div>
+
+</header>
+
+
+    <div class="status-grid">
+
+    <div class="status-card">
+        <h3>🟢 System Status</h3>
+        <p>{{ data.status }}</p>
+    </div>
+
+    <div class="status-card">
+        <h3>🤖 AI Prediction</h3>
+        <p>{{ prediction }}</p>
+    </div>
+
+    <div class="status-card">
+        <h3>🔧 Recovery</h3>
+        <p>{{ recovery_status }}</p>
+    </div>
+
+    <div class="status-card">
+        <h3>⚡ Self-Healing Action</h3>
+        <p>{{ recovery_status }}</p>
+    </div>
+
+    <div class="status-card">
+        <h3>❤️ Health Score</h3>
+
+        {% if data.cpu < 50 and data.ram < 70 %}
+            <p style="color:#00ff99;">98%</p>
+        {% elif data.cpu < 70 %}
+            <p style="color:#ffcc00;">85%</p>
+        {% else %}
+            <p style="color:#ff4444;">60%</p>
+        {% endif %}
+    </div>
+
+</div>
+
+<div class="backup-card">
+    <h2>✅ Backup Created Successfully</h2>
+    <p><strong>File:</strong> {{ backup_status.split('/')[-1] }}</p>
+</div>
+
+<div class="resource-grid">
+
+<div class="gauge-card">
+<h3>🖥 CPU Usage</h3>
+
+<div class="circle"
+style="background:conic-gradient(#00d9ff {{data.cpu}}%, #1c2435 0);">
+<div class="inner">{{data.cpu}}%</div>
+</div>
+
+</div>
+
+<div class="gauge-card">
+<h3>💾 RAM Usage</h3>
+
+<div class="circle"
+style="background:conic-gradient(#00ff99 {{data.ram}}%, #1c2435 0);">
+<div class="inner">{{data.ram}}%</div>
+</div>
+
+</div>
+
+<div class="gauge-card">
+<h3>🗄 Disk Usage</h3>
+
+<div class="circle"
+style="background:conic-gradient(#ffcc00 {{data.disk}}%, #1c2435 0);">
+<div class="inner">{{data.disk}}%</div>
+</div>
+
+</div>
+
+</div>
+<div class="system-card">
+    <h2>💻 System Information</h2>
+
+    <table class="info-table">
+
+        <tr>
+            <td>Operating System</td>
+            <td>{{ data.os }}</td>
+        </tr>
+
+        <tr>
+            <td>Processor</td>
+            <td>{{ data.processor }}</td>
+        </tr>
+
+        <tr>
+            <td>Machine</td>
+            <td>{{ data.machine }}</td>
+        </tr>
+
+        <tr>
+            <td>Python Version</td>
+            <td>{{ data.python }}</td>
+        </tr>
+
+    </table>
+
+</div>
+<h2>System Usage Report</h2>
+
+<img src="{{ url_for('static', filename='images/system_graph.png') }}" width="800">
+<div class="activity-section">
+
+    <div class="process-card">
+
+        <h2>🔥 High CPU Processes</h2>
+
+        {% for p in processes %}
+            <p>{{ p }}</p>
+        {% endfor %}
+        <div class="system-card">
+    <h2>🤖 AI Recommendation</h2>
+
+    {% for item in recommendations %}
+        <p>{{ item }}</p>
+    {% endfor %}
+</div>
+
+    </div>
+
+    <div class="activity-card">
+
+        <h2>📋 Recent Activity</h2>
+
+        <p>✅ User Login Successful</p>
+        <p>🤖 AI Prediction Completed</p>
+        <p>💾 Backup Created</p>
+        <p>🔧 Recovery Checked</p>
+        <p>📧 Email Alert Service Active</p>
+
+    </div>
+
+</div>
+
+<script>
+function updateClock() {
+    const now = new Date();
+
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    };
+
+    const date = now.toLocaleDateString('en-IN', options);
+    const time = now.toLocaleTimeString('en-IN');
+
+    document.getElementById("clock").innerHTML = date + " | " + time;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+
+<div id="popup" class="popup">
+    ✅ Backup Created Successfully
+</div>
+
+<script>
+window.onload = function () {
+    const popup = document.getElementById("popup");
+
+    popup.classList.add("show");
+
+    setTimeout(function () {
+        popup.classList.remove("show");
+    }, 4000);
+};
+</script>
+<h2>📊 Analytics Dashboard</h2>
+
+<div class="analytics-grid">
+
+    <div class="analytics-card">
+        <h3>📦 Total Backups</h3>
+        <h1>{{ backup_count }}</h1>
+    </div>
+
+    <div class="analytics-card">
+        <h3>🤖 AI Predictions</h3>
+        <h1>{{ prediction_count }}</h1>
+    </div>
+
+    <div class="analytics-card">
+        <h3>🔧 Recoveries</h3>
+        <h1>{{ recovery_count }}</h1>
+    </div>
+
+    <div class="analytics-card">
+        <h3>📧 Email Alerts</h3>
+        <h1>{{ alert_count }}</h1>
+    </div>
+    <div class="analytics-card">
+    <h3>⏱ System Uptime</h3>
+    <h1>{{ uptime }}</h1>
+</div>
+
+</div>
+
+</body>
+</html>
